@@ -1,0 +1,59 @@
+{% extends 'layouts/index.html' %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/anime_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="fon">
+    <a href="/anime/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Назад</a>
+    <div class="post_block">
+        <div class="image">
+            {% if anime.card_image %}
+            <img src="/media/{{ anime.card_image }}/" alt="">
+            {% else %}
+            <img src="{% static 'error.png' %}" alt="" width="255" height="255">
+            {% endif %}
+        </div>
+        <br>
+        <div class="info">
+            <h1>{{ anime.title }}</h1><br>
+            <h2>Для: {{ anime.category }} </h2><br>
+
+            {% for hashtag in hashtags %}
+                <h5>{{ hashtag.name }}</h5>
+            {% endfor %}
+
+            <div class="info_text">
+                <h4>{{ anime.description }}</h4><br>
+            </div>
+            <br>
+            <h3>Оценка: {{ anime.rate }}</h3><br><br>
+            <div class="dates">
+                <p>Дата создания: {{ anime.created_at }}</p>
+                <p>Дата обновления: {{ anime.updated_at }}</p><br><br>
+            </div>
+            <br><br>
+            <iframe src="{{ anime.url }}" frameborder="0" class="vid"></iframe>
+            <br><br>
+            <br><br>
+            <div class="create_comment">
+                <form action="/anime/{{ anime.id }}/" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Добавить комментарии">
+                </form>
+            </div>
+            <div class="comments">
+                {% for comment in comments %}
+                <div class="comment_block">
+                    <h5>{{ comment.text }}</h5>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
