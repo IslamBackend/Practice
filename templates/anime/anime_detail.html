@@ -23,7 +23,7 @@
             <h2>Для: {{ anime.category }} </h2><br>
 
             {% for hashtag in hashtags %}
-                <h5>{{ hashtag.name }}</h5>
+            <h5>{{ hashtag.name }}</h5>
             {% endfor %}
 
             <div class="info_text">
@@ -35,6 +35,9 @@
                 <p>Дата создания: {{ anime.created_at }}</p>
                 <p>Дата обновления: {{ anime.updated_at }}</p><br><br>
             </div>
+            <button><a href="/anime/{{anime.id}}/update/">ИЗМЕНИТЬ</a></button>
+            <br><br>
+            <button><a href="/anime/{{anime.id}}/delete/">УДАЛИТЬ</a></button>
             <br><br>
             <iframe src="{{ anime.url }}" frameborder="0" class="vid"></iframe>
             <br><br>

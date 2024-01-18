@@ -63,3 +63,30 @@ def anime_create_view(request):
                 'form': form
             }
             return render(request, 'anime/anime_create.html', context)
+
+
+def anime_update_view(request, anime_id):
+    anime = get_object_or_404(Anime, id=anime_id)
+    if request.method == 'GET':
+        context = {
+            'form': AnimeCreateForm(instance=anime)
+        }
+        return render(request, 'anime/anime_update.html', context)
+
+    if request.method == 'POST':
+        form = AnimeCreateForm(request.POST, request.FILES, instance=anime)
+        if form.is_valid():
+            form.save()
+            return redirect('/anime/')
+
+        context = {
+            'form': form
+        }
+        return render(request, 'anime/anime_update.html', context)
+
+
+def anime_delete_view(request, anime_id):
+    anime = get_object_or_404(Anime, id=anime_id)
+    if request.method == 'POST':
+        anime.delete()
+        return redirect('/anime/')
