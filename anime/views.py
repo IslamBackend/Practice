@@ -87,6 +87,7 @@ def anime_update_view(request, anime_id):
 
 def anime_delete_view(request, anime_id):
     anime = get_object_or_404(Anime, id=anime_id)
-    if request.method == 'POST':
+    if request.method == 'GET':
         anime.delete()
         return redirect('/anime/')
+    return HttpResponse('LOL ERROR!')

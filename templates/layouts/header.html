@@ -27,14 +27,14 @@
             Выпадающий список
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Действие</a></li>
-            <li><a class="dropdown-item" href="#">Другое действие</a></li>
+            <li><a class="dropdown-item" href="/users/registration/">Регистрация</a></li>
+            <li><a class="dropdown-item" href="/users/login/">Аутентификация</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+            <li><a class="dropdown-item" href="/users/logout/">LOGOUT</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">Отключенная</a>
+          <a class="nav-link" href="/users/profile/">{{user.username}}</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
