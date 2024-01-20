@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from anime.forms import CommentCreateForm, AnimeCreateForm
 from anime.models import Anime, Comment, HashTag
+from django.conf import settings
 
 
 def main_view(request):
@@ -11,9 +12,35 @@ def main_view(request):
 def anime_list_view(request):
     if request.method == 'GET':
         anime_list = Anime.objects.all()
+        search = request.GET.get('search')
+        order = request.GET.get('order')
+        page = int(request.GET.get('page', 1))
+
+        if search is not None:
+            anime_list = anime_list.filter(title__icontains=search)
+
+        if order == 'created_at':
+            anime_list = anime_list.order_by('created_at')
+        elif order == '-created_at':
+            anime_list = anime_list.order_by('-created_at')
+
+        max_page = anime_list.__len__() / settings.PAGE_SIZE
+
+        if max_page > round(max_page):
+            max_page = round(max_page) + 1
+        else:
+            max_page = round(max_page)
+
+        start = (page - 1) * settings.PAGE_SIZE
+        end = page * settings.PAGE_SIZE
+
+        anime_list = anime_list[start:end]
+
         context = {
             'anime_list': anime_list,
+            'pages': range(1, max_page + 1),
         }
+
         return render(request, 'anime/anime_list.html', context)
 
 

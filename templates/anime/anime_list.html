@@ -2,29 +2,40 @@
 {% load static %}
 
 {% block head %}
-        <link rel="stylesheet" href="{% static 'css/anime_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/anime_list.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="posts">
-    {% for anime in anime_list %}
-    <div class="card" style="width: 18rem;">
-        <img src="/media/{{anime.card_image}}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{anime.title}}</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Оценка: {{anime.rate}} ⭐️</li>
-            {% for hashtag in anime.hashtags.all %}
-            <span class="badge rounded-pill text-bg-secondary">{{hashtag}}</span><br>
-            {% endfor %}
-            <li class="list-group-item">{{anime.created_at}}</li>
-        </ul>
+    <center>
+        <a href="?order=created_at" method="GET">Date</a>
+        <a href="?order=-created_at" method="GET">-Date</a>
+    </center>
+    <div class="posts">
+        {% for anime in anime_list %}
+        <div class="card" style="width: 18rem;">
+            <img src="/media/{{anime.card_image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{anime.title}}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Оценка: {{anime.rate}} ⭐️</li>
+                {% for hashtag in anime.hashtags.all %}
+                <span class="badge rounded-pill text-bg-secondary">{{hashtag}}</span><br>
+                {% endfor %}
+                <li class="list-group-item">{{anime.created_at}}</li>
+            </ul>
 
-        <div class="card-body">
-            <a href="/anime/{{anime.id}}/" class="card-link">Подробнее</a>
+            <div class="card-body">
+                <a href="/anime/{{anime.id}}/" class="card-link">Подробнее</a>
+            </div>
         </div>
+        {% endfor %}
     </div>
+    <center>
+    {% for page in pages %}
+        <button type="button" class="btn btn-secondary">
+            <a href="?page={{ page }}" method="GET">{{ page }}</a>
+        </button>
     {% endfor %}
-</div>
+    </center>
 {% endblock %}
